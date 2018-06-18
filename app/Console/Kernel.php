@@ -2,7 +2,9 @@
 
 namespace App\Console;
 
+use App\Console\Commands\PingProxyHostsByCron;
 use App\Console\Commands\RefreshProxyHosts;
+use App\Console\Commands\RefreshProxyHostsByCron;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -15,7 +17,9 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         \App\Console\Commands\PingProxyHosts::class,
+        \App\Console\Commands\PingProxyHostsByCron::class,
         \App\Console\Commands\RefreshProxyHosts::class,
+        \App\Console\Commands\RefreshProxyHostsByCron::class,
 
     ];
 
@@ -27,8 +31,11 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command(PingProxyHosts::class, ['--force'])->everyMinute();;
-        $schedule->command(RefreshProxyHosts::class, ['--force'])->everyMinute();;
+        $schedule->command(PingProxyHosts::class, ['--force'])->everyMinute();
+        $schedule->command(PingProxyHostsByCron::class, ['--force'])->cron('* * * * * *');
+
+        $schedule->command(RefreshProxyHosts::class, ['--force'])->everyMinute();
+        $schedule->command(RefreshProxyHostsByCron::class, ['--force'])->cron('* * * * * *');
     }
 
     /**
