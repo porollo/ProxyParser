@@ -19,9 +19,10 @@ class CreateProxyListsTable extends Migration
             $table->string("port");
             $table->string("country");
             $table->string("anonymity");
-            $table->integer("availability");
+            $table->String("availability");
             $table->integer("ping");
             $table->timestamps();
+
         });
     }
 

@@ -9,7 +9,6 @@ $factory->define(App\Models\ProxyList::class, function (Faker $faker) {
         'country' => $faker->country,
         'anonymity' => "High",
         'availability' => "Medium",
-        'ping' => "11.5 ms",
-        'remember_token' => str_random(10),
+        'ping' => 11.5,
     ];
 });
