@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use App\Console\Commands\RefreshProxyHosts;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -13,7 +14,9 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        //
+        \App\Console\Commands\PingProxyHosts::class,
+        \App\Console\Commands\RefreshProxyHosts::class,
+
     ];
 
     /**
@@ -24,8 +27,8 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')
-        //          ->hourly();
+        $schedule->command(PingProxyHosts::class, ['--force'])->everyMinute();;
+        $schedule->command(RefreshProxyHosts::class, ['--force'])->everyMinute();;
     }
 
     /**
